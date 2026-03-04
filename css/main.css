@@ -91,3 +91,14 @@ textarea {
 .outOfStock {
     text-decoration: line-through
 }
+
+.brand-icon {
+    width: 30px; 
+    height: 30px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

@@ -83,6 +83,7 @@ Vue.component('product-review', {
                     recommend: this.recommend
                 }
                 eventBus.$emit('review-submitted', productReview)
+                this.thanksMassage()
                 this.name = null
                 this.review = null
                 this.rating = null
@@ -94,6 +95,10 @@ Vue.component('product-review', {
                 if(!this.recommend) this.errors.push("Recommend required.")
 
             }
+
+        },
+        thanksMassage () {
+            alert('Thank you for review!')
         }
 
     }
@@ -114,7 +119,7 @@ props: {
    details: {
        type: Array,
        required: false
-   }
+   },
 },
 
   template: `
@@ -156,11 +161,7 @@ props: {
            selectedTab: 'Reviews'  // устанавливается с помощью @click
        }
    },
-   /*methods: {
-    addReview(productReview) {
-                this.reviews.push(productReview)
-            }
-   }*/
+
 })
 
 
@@ -175,12 +176,14 @@ Vue.component('product', {
             <img :src="image" :alt="altText" />
        </div>
        <div class="product-info">
-            <h1>{{ title }}</h1>
+            <div class="brand">
+                <h1>{{ title }}</h1><img :src="brandIcon" class="brand-icon">
+            </div>
+
             <p>{{ description }}</p>
             <a :href="link">More products like this</a>
             <p v-if="inStock">In Stock</p>
             <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
-            <!--<span v-show="onSale">On sale</span>-->
             <p>{{ sale }}</p>
             <product-details :details="details"></product-details>
 
@@ -194,7 +197,6 @@ Vue.component('product', {
                 <ul v-for="size in sizes">
                     <li>{{ size }}</li>
                 </ul>
-           <!-- <p>Shipping: {{ shipping }}</p>-->
             
             <button v-on:click="addToCart"
                     :disabled="!inStock"
@@ -217,8 +219,6 @@ Vue.component('product', {
             </div>
             -->
 
-            <!--<product-review @review-submitted="addReview"></product-review>-->
-
        </div>
             <product-tabs
             :reviews="reviews"
@@ -238,6 +238,7 @@ Vue.component('product', {
         return {
                 product: "Socks",
                 brand: 'Vue Mastery',
+                brandIcon: './assets/brand-icon.png',
                 description: "A pair of warm, fuzzy socks",
                 selectedVariant: 0,
                 altText: "A pair of socks",
@@ -310,7 +311,9 @@ Vue.component('product', {
                 } else {
                     return 2.99
                 }
-            }  
+            },
+
+
         },
 })
 
